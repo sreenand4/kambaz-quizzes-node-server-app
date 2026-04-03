@@ -9,9 +9,20 @@ export default function UserRoutes(app, db) {
     res.json(newUser);
   };
   const deleteUser = (req, res) => {
+    const sessionUser = req.session["currentUser"];
+    if (!sessionUser || sessionUser.role !== "FACULTY") {
+      res.sendStatus(403);
+      return;
+    }
     const { userId } = req.params;
+    if (sessionUser._id === userId) {
+      res.status(400).json({ message: "Cannot delete your own account" });
+      return;
+    }
     dao.deleteUser(userId);
-    db.enrollments = db.enrollments.filter((enrollment) => enrollment.user !== userId);
+    db.enrollments = db.enrollments.filter(
+      (enrollment) => enrollment.user !== userId
+    );
     res.sendStatus(200);
   };
   const findAllUsers = (req, res) => {
@@ -28,17 +39,31 @@ export default function UserRoutes(app, db) {
     res.json(user);
   };
   const updateUser = (req, res) => {
-    const userId = req.params.userId;
+    const sessionUser = req.session["currentUser"];
+    if (!sessionUser) {
+      res.sendStatus(401);
+      return;
+    }
+    const { userId } = req.params;
+    if (sessionUser.role !== "FACULTY" && sessionUser._id !== userId) {
+      res.sendStatus(403);
+      return;
+    }
     const userUpdates = req.body;
-    dao.updateUser(userId, userUpdates);
-    const currentUser = dao.findUserById(userId);
-    req.session["currentUser"] = currentUser;
-    res.json(currentUser);
+    const updated = dao.updateUser(userId, userUpdates);
+    if (!updated) {
+      res.sendStatus(404);
+      return;
+    }
+    if (sessionUser._id === userId) {
+      req.session["currentUser"] = updated;
+    }
+    res.json(updated);
   };
   const signup = (req, res) => {
     const user = dao.findUserByUsername(req.body.username);
     if (user) {
-      res.status(400).json({ message: "Username already taken" });
+      res.status(400).json({ message: "Username already in use" });
       return;
     }
     const currentUser = dao.createUser(req.body);

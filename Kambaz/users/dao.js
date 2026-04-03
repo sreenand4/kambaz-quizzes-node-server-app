@@ -14,8 +14,13 @@ export default function UsersDao(db) {
     db.users.find(
       (user) => user.username === username && user.password === password
     );
-  const updateUser = (userId, user) =>
-    (db.users = db.users.map((u) => (u._id === userId ? user : u)));
+  const updateUser = (userId, userUpdates) => {
+    const idx = db.users.findIndex((u) => u._id === userId);
+    if (idx === -1) return null;
+    const merged = { ...db.users[idx], ...userUpdates, _id: userId };
+    db.users[idx] = merged;
+    return merged;
+  };
   const deleteUser = (userId) =>
     (db.users = db.users.filter((u) => u._id !== userId));
   return {
