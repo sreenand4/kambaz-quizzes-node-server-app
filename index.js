@@ -26,15 +26,20 @@ const sessionOptions = {
   saveUninitialized: false,
 };
 if (process.env.SERVER_ENV !== "development") {
+  app.set("trust proxy", 1);
   sessionOptions.proxy = true;
   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    domain: process.env.SERVER_URL,
   };
+  console.log("Session options:", sessionOptions);
 }
 app.use(session(sessionOptions));
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 UserRoutes(app, db);
 CourseRoutes(app, db);
@@ -45,4 +50,8 @@ QuizzesRoutes(app, db);
 Lab5(app);
 Hello(app);
 const port = process.env.PORT || 4000;
-app.listen(port);
+app.listen(port, () => {
+  console.log(
+    `Kambaz API listening on port ${port} (SERVER_ENV=${process.env.SERVER_ENV ?? "not set"})`
+  );
+});
