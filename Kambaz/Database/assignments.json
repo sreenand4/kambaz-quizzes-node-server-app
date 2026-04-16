@@ -1,0 +1,12 @@
+[
+  {"_id":"A101","title":"Propulsion Assignment","course":"RS101","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-02-15","points":100,"description":"Write a detailed analysis of various propulsion systems."},
+  {"_id":"A102","title":"Combustion Analysis","course":"RS101","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-03-15","points":100,"description":"Analyze different combustion processes in rocket engines."},
+  {"_id":"A103","title":"Nozzle Design Project","course":"RS101","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-04-15","points":150,"description":"Design a nozzle for a specific mission profile."},
+  {"_id":"A201","title":"Aerodynamics Quiz","course":"RS102","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-02-20","points":50,"description":"Quiz on aerodynamics fundamentals."},
+  {"_id":"A202","title":"Flow Analysis","course":"RS102","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-03-20","points":100,"description":"Analyze subsonic and supersonic flow characteristics."},
+  {"_id":"A301","title":"Structural Design Task","course":"RS103","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-03-01","points":100,"description":"Design a structural component for a spacecraft."},
+  {"_id":"A401","title":"Organic Compounds Lab","course":"RS104","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-02-25","points":75,"description":"Lab report on organic compound synthesis."},
+  {"_id":"A501","title":"Coordination Chemistry Report","course":"RS105","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-03-10","points":100,"description":"Report on coordination compounds and their properties."},
+  {"_id":"A601","title":"Thermodynamics Problem Set","course":"RS106","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-03-05","points":80,"description":"Problem set covering laws of thermodynamics."},
+  {"_id":"A701","title":"Ancient Greek Translation","course":"RS107","availableFrom":"2023-01-10","availableUntil":"2023-05-15","dueDate":"2023-02-28","points":100,"description":"Translate a passage from Ancient Greek to English."}
+]

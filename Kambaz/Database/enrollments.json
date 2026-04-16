@@ -1,0 +1,21 @@
+[
+  { "_id": "E101", "user": "U101", "course": "RS101", "status": "ENROLLED" },
+  { "_id": "E102", "user": "U102", "course": "RS101", "status": "ENROLLED" },
+  { "_id": "E103", "user": "U103", "course": "RS101", "status": "ENROLLED" },
+  { "_id": "E104", "user": "U104", "course": "RS102", "status": "ENROLLED" },
+  { "_id": "E105", "user": "U105", "course": "RS102", "status": "ENROLLED" },
+  { "_id": "E106", "user": "U106", "course": "RS102", "status": "ENROLLED" },
+  { "_id": "E107", "user": "U102", "course": "RS103", "status": "ENROLLED" },
+  { "_id": "E108", "user": "U103", "course": "RS103", "status": "ENROLLED" },
+  { "_id": "E109", "user": "U107", "course": "RS103", "status": "ENROLLED" },
+  { "_id": "E110", "user": "U101", "course": "RS104", "status": "ENROLLED" },
+  { "_id": "E111", "user": "U106", "course": "RS104", "status": "ENROLLED" },
+  { "_id": "E112", "user": "U105", "course": "RS105", "status": "ENROLLED" },
+  { "_id": "E113", "user": "U107", "course": "RS105", "status": "ENROLLED" },
+  { "_id": "E114", "user": "U104", "course": "RS106", "status": "ENROLLED" },
+  { "_id": "E115", "user": "U102", "course": "RS106", "status": "ENROLLED" },
+  { "_id": "E116", "user": "U103", "course": "RS107", "status": "ENROLLED" },
+  { "_id": "E117", "user": "U105", "course": "RS107", "status": "ENROLLED" },
+  { "_id": "E118", "user": "U107", "course": "RS101", "status": "ENROLLED" },
+  { "_id": "E119", "user": "U106", "course": "RS103", "status": "ENROLLED" }
+]

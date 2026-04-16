@@ -1,28 +1,47 @@
 import QuizzesDao from "./dao.js";
+import QuestionsDao from "../questions/dao.js";
 
-export default function QuizzesRoutes(app, db) {
-  const dao = QuizzesDao(db);
+export default function QuizzesRoutes(app) {
+  const dao = QuizzesDao();
+  const questionsDao = QuestionsDao();
 
-  app.get("/api/courses/:courseId/quizzes", (req, res) => {
-    res.json(dao.findQuizzesForCourse(req.params.courseId));
-  });
+  const findQuizzesForCourse = async (req, res) => {
+    const { courseId } = req.params;
+    const quizzes = await dao.findQuizzesForCourse(courseId);
+    res.json(quizzes);
+  };
 
-  app.get("/api/quizzes/:quizId", (req, res) => {
-    const quiz = dao.findQuizById(req.params.quizId);
+  const findQuizById = async (req, res) => {
+    const { quizId } = req.params;
+    const quiz = await dao.findQuizById(quizId);
     if (!quiz) return res.sendStatus(404);
     res.json(quiz);
-  });
+  };
 
-  app.post("/api/courses/:courseId/quizzes", (req, res) => {
-    const quiz = { ...req.body, course: req.params.courseId };
-    res.json(dao.createQuiz(quiz));
-  });
+  const createQuizForCourse = async (req, res) => {
+    const { courseId } = req.params;
+    const quiz = { ...req.body, course: courseId };
+    const newQuiz = await dao.createQuiz(quiz);
+    res.json(newQuiz);
+  };
 
-  app.put("/api/quizzes/:quizId", (req, res) => {
-    res.json(dao.updateQuiz(req.params.quizId, req.body));
-  });
+  const updateQuiz = async (req, res) => {
+    const { quizId } = req.params;
+    const quizUpdates = req.body;
+    const updatedQuiz = await dao.updateQuiz(quizId, quizUpdates);
+    res.json(updatedQuiz);
+  };
 
-  app.delete("/api/quizzes/:quizId", (req, res) => {
-    res.json(dao.deleteQuiz(req.params.quizId));
-  });
+  const deleteQuiz = async (req, res) => {
+    const { quizId } = req.params;
+    await questionsDao.deleteQuestionsForQuiz(quizId);
+    const status = await dao.deleteQuiz(quizId);
+    res.json(status);
+  };
+
+  app.get("/api/courses/:courseId/quizzes", findQuizzesForCourse);
+  app.get("/api/quizzes/:quizId", findQuizById);
+  app.post("/api/courses/:courseId/quizzes", createQuizForCourse);
+  app.put("/api/quizzes/:quizId", updateQuiz);
+  app.delete("/api/quizzes/:quizId", deleteQuiz);
 }

@@ -1,39 +1,37 @@
-import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
 export default function EnrollmentsDao(db) {
+  async function findCoursesForUser(userId) {
+    const enrollments = await model.find({ user: userId }).populate("course");
+    return enrollments.map((enrollment) => enrollment.course);
+  }
+
+  async function findUsersForCourse(courseId) {
+    const enrollments = await model.find({ course: courseId }).populate("user");
+    return enrollments.map((enrollment) => enrollment.user);
+  }
+
   function enrollUserInCourse(userId, courseId) {
-    const existing = db.enrollments.find(
-      (enrollment) => enrollment.user === userId && enrollment.course === courseId
-    );
-    if (existing) return existing;
-    const enrollment = { _id: uuidv4(), user: userId, course: courseId };
-    db.enrollments.push(enrollment);
-    return enrollment;
+    return model.create({
+      user: userId,
+      course: courseId,
+      _id: `${userId}-${courseId}`,
+    });
   }
 
-  function unenrollUserFromCourse(userId, courseId) {
-    db.enrollments = db.enrollments.filter(
-      (enrollment) =>
-        !(enrollment.user === userId && enrollment.course === courseId)
-    );
-    return db.enrollments;
+  function unenrollUserFromCourse(user, course) {
+    return model.deleteOne({ user, course });
   }
 
-  function findEnrollmentsForUser(userId) {
-    return db.enrollments.filter((enrollment) => enrollment.user === userId);
-  }
-
-  function findUsersForCourse(courseId) {
-    const userIds = db.enrollments
-      .filter((enrollment) => enrollment.course === courseId)
-      .map((enrollment) => enrollment.user);
-    return db.users.filter((user) => userIds.includes(user._id));
+  function unenrollAllUsersFromCourse(courseId) {
+    return model.deleteMany({ course: courseId });
   }
 
   return {
+    findCoursesForUser,
+    findUsersForCourse,
     enrollUserInCourse,
     unenrollUserFromCourse,
-    findEnrollmentsForUser,
-    findUsersForCourse,
+    unenrollAllUsersFromCourse,
   };
 }
