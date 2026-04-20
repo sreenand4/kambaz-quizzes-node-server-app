@@ -17,6 +17,7 @@ import AssignmentsRoutes from "./Kambaz/assignments/routes.js";
 import EnrollmentsRoutes from "./Kambaz/enrollments/routes.js";
 import QuizzesRoutes from "./Kambaz/quizzes/routes.js";
 import QuestionsRoutes from "./Kambaz/questions/routes.js";
+import AttemptsRoutes from "./Kambaz/attempts/routes.js";
 
 const app = express();
 app.use(
@@ -54,6 +55,7 @@ AssignmentsRoutes(app);
 EnrollmentsRoutes(app, db);
 QuizzesRoutes(app);
 QuestionsRoutes(app);
+AttemptsRoutes(app);
 Lab5(app);
 Hello(app);
 const port = process.env.PORT || 4001;
